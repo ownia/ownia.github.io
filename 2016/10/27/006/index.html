@@ -1,0 +1,244 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>冒泡排序及其复杂度分析 | Ownia</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="问题：给定一个整数序列，按照是非递减的顺序排列序列中的整数输入：一个整数序列输出：整数序列，其中的整数升序排列
+
+123456789101112131415void bubble_sort(int *a, int size)&amp;#123;    int i, j, t;    for(i = 1; i &amp;lt; size; ++i)&amp;#123;    for(j = 0; j &amp;lt; size">
+<meta property="og:type" content="article">
+<meta property="og:title" content="冒泡排序及其复杂度分析">
+<meta property="og:url" content="ownia.top/2016/10/27/006/index.html">
+<meta property="og:site_name" content="Ownia">
+<meta property="og:description" content="问题：给定一个整数序列，按照是非递减的顺序排列序列中的整数输入：一个整数序列输出：整数序列，其中的整数升序排列
+
+123456789101112131415void bubble_sort(int *a, int size)&amp;#123;    int i, j, t;    for(i = 1; i &amp;lt; size; ++i)&amp;#123;    for(j = 0; j &amp;lt; size">
+<meta property="og:updated_time" content="2016-10-27T06:20:32.622Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="冒泡排序及其复杂度分析">
+<meta name="twitter:description" content="问题：给定一个整数序列，按照是非递减的顺序排列序列中的整数输入：一个整数序列输出：整数序列，其中的整数升序排列
+
+123456789101112131415void bubble_sort(int *a, int size)&amp;#123;    int i, j, t;    for(i = 1; i &amp;lt; size; ++i)&amp;#123;    for(j = 0; j &amp;lt; size">
+  
+    <link rel="alternative" href="/atom.xml" title="Ownia" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
+  
+</head>
+<body>
+<div id="container">
+  <div id="wrap">
+    <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Ownia</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//www.baidu.com/baidu" method="get" accept-charset="utf-8" class="search-form">
+          <input type="search" name="word" maxlength="20" class="search-form-input" placeholder="Search">
+          <input type="submit" value="" class="search-form-submit">
+          <input name=tn type=hidden value="bds">
+          <input name=cl type=hidden value="3">
+          <input name=ct type=hidden value="2097152">
+          <input type="hidden" name="si" value="ownia.top">
+        </form>
+      </div>
+    </div>
+  </div>
+</header>
+    <div class="outer">
+      <section id="main"><article id="post-006" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/27/006/" class="article-date">
+  <time datetime="2016-10-27T03:38:17.000Z" itemprop="datePublished">2016-10-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      冒泡排序及其复杂度分析
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>问题：给定一个整数序列，按照是非递减的顺序排列序列中的整数<br>输入：一个整数序列<br>输出：整数序列，其中的整数升序排列</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">void bubble_sort(int *a, int size)</div><div class="line">&#123;</div><div class="line">    int i, j, t;</div><div class="line">    for(i = 1; i &lt; size; ++i)&#123;</div><div class="line">    for(j = 0; j &lt; size -i; ++j)</div><div class="line">        &#123;</div><div class="line">        if(a[j] &gt; a[j+1])</div><div class="line">            &#123;</div><div class="line">            t = a[j];</div><div class="line">            a[j] = a[j+1];</div><div class="line">            a[j+1] = t;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>时间复杂度分析</strong><br>其外层循环执行 N - 1次。<br>内层循环最多的时候执行N次，最少的时候执行1次，平均执行(N+1)/2次。<br>所以循环体内的比较交换约执行(N - 1)(N + 1) / 2 = (N^2 - 1)/2。<br>按照计算复杂度的原则，去掉常数，去掉最高项系数，其复杂度为O(N^2)。</p>
+<p><strong>冒泡算法的性能改进</strong><br>上述算法的性能还有改进的空间。给定一个整数序列 [9, 3, 4, 5, 7]，每完成一次上述算法的外层循环，整数序列变化为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">9, 3, 4, 5, 7</div><div class="line">3, 4, 5, 7, 9 (i = 1)</div><div class="line">3, 4, 5, 7, 9 (i = 2)</div><div class="line">3, 4, 5, 7, 9 (i = 3)</div><div class="line">3, 4, 5, 7, 9 (i = 4)</div></pre></td></tr></table></figure>
+<p>当第一次外层循环完成后，排序就完成了。后面的循环只有比较，而没有交换。<br>当一次外层循环中，相邻的元素没有发生交换，就说明数组已经是有序的了，这时可以跳出循环。<br>我们可以设置一个布尔变量，记录一次外层循环中是否发生交换，如果未发生交换，算法就返回。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">void bubble_sort_enhanced(int *a, int size)</div><div class="line">&#123;</div><div class="line">    int i, j, t;</div><div class="line">    unsigned char swapped;</div><div class="line">    for(i = 1; i &lt; size; ++i)</div><div class="line">        &#123;</div><div class="line">        swapped = 0;</div><div class="line">        for(j = 0; j &lt; size - i; ++j)</div><div class="line">            &#123;</div><div class="line">            if(a[j] &gt; a[j+1])</div><div class="line">                &#123;</div><div class="line">                t = a[j];</div><div class="line">                a[j] = a[j+1];</div><div class="line">                a[j+1] = t;</div><div class="line">                swapped = 1;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        if(!swapped)</div><div class="line">            break;</div><div class="line">        &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>按照改进的算法，对于一个已经有序的数组，算法完成第一次外层循环后就会返回。<br>实际上只发生了N - 1次比较，所以最好的情况下，该算法复杂度是O(N)。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="ownia.top/2016/10/27/006/" data-id="ciuryrlgn0005awvp1ucqia26" class="article-share-link">Share</a>
+      
+
+      
+        <a href="ownia.top/2016/10/27/006/#ds-thread" class="article-comment-link">Comments</a>
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/10/04/005/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">三目运算符的妙用</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+  <section id="comments">
+    <div id="ds-thread" class="ds-thread" data-thread-key="2016/10/27/006/" data-title="冒泡排序及其复杂度分析" data-url="ownia.top/2016/10/27/006/"></div>
+  </section>
+</section>
+      
+      <aside id="sidebar">
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">6</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Articles/">Articles</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a><span class="tag-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Links</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="https://www.zhihu.com/people/ou-yang-wei-zhao" target="_blank">知乎</a>
+          </li>
+        
+          <li>
+            <a href="https://github.com/ownia" target="_blank">Github</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+      
+    </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 Ownia<br>
+      Powered by <a href="//hexo.io/" target="_blank">Hexo</a>
+      .
+      Theme by <a href="https://github.com/xiangming/landscape-plus" target="_blank">Landscape-plus</a>
+    </div>
+  </div>
+</footer>
+  </div>
+  <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+  <!-- totop start -->
+<div id="totop">
+<a title="totop"><img src="/img/scrollup.png"/></a>
+</div>
+
+<!-- totop end -->
+
+<!-- 多说公共js代码 start -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"ownia"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共js代码 end -->
+
+
+<!-- 百度分享 start -->
+
+<!-- 百度分享 end -->
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+</div>
+</body>
+</html>
