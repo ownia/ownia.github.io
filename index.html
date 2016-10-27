@@ -90,19 +90,19 @@
         <blockquote>
 <p>问题：给定一个整数序列，按照是非递减的顺序排列序列中的整数<br>输入：一个整数序列<br>输出：整数序列，其中的整数升序排列</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">void bubble_sort(int *a, int size)</div><div class="line">&#123;</div><div class="line">    int i, j, t;</div><div class="line">    for(i = 1; i &lt; size; ++i)&#123;</div><div class="line">    for(j = 0; j &lt; size -i; ++j)</div><div class="line">        &#123;</div><div class="line">        if(a[j] &gt; a[j+1])</div><div class="line">            &#123;</div><div class="line">            t = a[j];</div><div class="line">            a[j] = a[j+1];</div><div class="line">            a[j+1] = t;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">void bubble_sort(int *a, int size)</div><div class="line">&#123;</div><div class="line">    int i, j, t;</div><div class="line">    for(i = 1; i &lt; size; ++i)</div><div class="line">    &#123;</div><div class="line">    for(j = 0; j &lt; size -i; ++j)</div><div class="line">        &#123;</div><div class="line">        if(a[j] &gt; a[j+1])</div><div class="line">            &#123;</div><div class="line">            t = a[j];</div><div class="line">            a[j] = a[j+1];</div><div class="line">            a[j+1] = t;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p><strong>时间复杂度分析</strong><br>其外层循环执行 N - 1次。<br>内层循环最多的时候执行N次，最少的时候执行1次，平均执行(N+1)/2次。<br>所以循环体内的比较交换约执行(N - 1)(N + 1) / 2 = (N^2 - 1)/2。<br>按照计算复杂度的原则，去掉常数，去掉最高项系数，其复杂度为O(N^2)。</p>
 <p><strong>冒泡算法的性能改进</strong><br>上述算法的性能还有改进的空间。给定一个整数序列 [9, 3, 4, 5, 7]，每完成一次上述算法的外层循环，整数序列变化为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">9, 3, 4, 5, 7</div><div class="line">3, 4, 5, 7, 9 (i = 1)</div><div class="line">3, 4, 5, 7, 9 (i = 2)</div><div class="line">3, 4, 5, 7, 9 (i = 3)</div><div class="line">3, 4, 5, 7, 9 (i = 4)</div></pre></td></tr></table></figure>
 <p>当第一次外层循环完成后，排序就完成了。后面的循环只有比较，而没有交换。<br>当一次外层循环中，相邻的元素没有发生交换，就说明数组已经是有序的了，这时可以跳出循环。<br>我们可以设置一个布尔变量，记录一次外层循环中是否发生交换，如果未发生交换，算法就返回。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">void bubble_sort_enhanced(int *a, int size)</div><div class="line">&#123;</div><div class="line">    int i, j, t;</div><div class="line">    unsigned char swapped;</div><div class="line">    for(i = 1; i &lt; size; ++i)</div><div class="line">        &#123;</div><div class="line">        swapped = 0;</div><div class="line">        for(j = 0; j &lt; size - i; ++j)</div><div class="line">            &#123;</div><div class="line">            if(a[j] &gt; a[j+1])</div><div class="line">                &#123;</div><div class="line">                t = a[j];</div><div class="line">                a[j] = a[j+1];</div><div class="line">                a[j+1] = t;</div><div class="line">                swapped = 1;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        if(!swapped)</div><div class="line">            break;</div><div class="line">        &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">void bubble_sort_enhanced(int *a, int size)</div><div class="line">&#123;</div><div class="line">    int i, j, t;</div><div class="line">    unsigned char swapped;</div><div class="line">    for(i = 1; i &lt; size; ++i)</div><div class="line">    &#123;</div><div class="line">    swapped = 0;</div><div class="line">    for(j = 0; j &lt; size - i; ++j)</div><div class="line">        &#123;</div><div class="line">        if(a[j] &gt; a[j+1])</div><div class="line">            &#123;</div><div class="line">            t = a[j];</div><div class="line">            a[j] = a[j+1];</div><div class="line">            a[j+1] = t;</div><div class="line">            swapped = 1;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        if(!swapped)</div><div class="line">            break;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>按照改进的算法，对于一个已经有序的数组，算法完成第一次外层循环后就会返回。<br>实际上只发生了N - 1次比较，所以最好的情况下，该算法复杂度是O(N)。</p>
 
       
     </div>
     <footer class="article-footer">
       
-        <a data-url="ownia.top/2016/10/27/006/" data-id="ciuryrlgn0005awvp1ucqia26" class="article-share-link">Share</a>
+        <a data-url="ownia.top/2016/10/27/006/" data-id="ciuryw9mc0006acvps390ibh4" class="article-share-link">Share</a>
       
 
       
@@ -152,7 +152,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="ownia.top/2016/10/04/005/" data-id="ciuryrlg70004awvpryvpdjqz" class="article-share-link">Share</a>
+        <a data-url="ownia.top/2016/10/04/005/" data-id="ciuryw9mc0009acvplij8gapj" class="article-share-link">Share</a>
       
 
       
@@ -207,7 +207,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="ownia.top/2016/10/03/004/" data-id="ciuryrlgn0009awvp134mrdgu" class="article-share-link">Share</a>
+        <a data-url="ownia.top/2016/10/03/004/" data-id="ciuryw9mc0004acvpdpr6wg08" class="article-share-link">Share</a>
       
 
       
@@ -256,7 +256,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="ownia.top/2016/10/03/003/" data-id="ciuryrlg70002awvpgt8qzaf0" class="article-share-link">Share</a>
+        <a data-url="ownia.top/2016/10/03/003/" data-id="ciuryw9mc0002acvpg7z27yi3" class="article-share-link">Share</a>
       
 
       
@@ -301,7 +301,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="ownia.top/2016/10/03/002/" data-id="ciuryrlgn0006awvpdxg6u0xt" class="article-share-link">Share</a>
+        <a data-url="ownia.top/2016/10/03/002/" data-id="ciuryw9mc0005acvp9yz4s5vk" class="article-share-link">Share</a>
       
 
       
@@ -349,7 +349,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="ownia.top/2016/10/03/001/" data-id="ciuryrlg70000awvpm7h3n5rl" class="article-share-link">Share</a>
+        <a data-url="ownia.top/2016/10/03/001/" data-id="ciuryw9lw0001acvphntwctwg" class="article-share-link">Share</a>
       
 
       
