@@ -1,11 +1,7 @@
-title: Your awesome title
-author: GitHub User
-email: your-email@domain.com
+title: Ownia
+author: 
+email: o451686892@outlook.com | o451686892@gmail.com
 description: > # this means to ignore newlines until "show_exerpts:"
-  Write an awesome description for your new site here. You can edit this
-  line in _config.yml. It will appear in your document head meta (for
-  Google search results) and in your feed.xml site description.
-
 show_excerpts: false # set to true to show excerpts on the homepage
 
 # Minima date format
@@ -15,9 +11,9 @@ minima:
 
   # generate social links in footer
   social_links:
-    twitter: jekyllrb
-    github:  jekyll
-    rss: rss
+    twitter: oywz123
+    github:  ownia
+    # rss: rss
     # dribbble: jekyll
     # facebook: jekyll
     # flickr:   jekyll
