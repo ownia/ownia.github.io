@@ -1,5 +1,6 @@
 ---
 layout: post
+title: "扫雷MineSweeper的设计"
 ---
 #### MineSweeper的实现思路
 
