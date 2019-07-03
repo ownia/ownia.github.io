@@ -40,8 +40,11 @@ minima:
 # - about.md
 
 # Build settings
+redcarpet:
+    extensions: [ "hard_wrap","autolink", "tables", "strikethrough", "superscript", "with_toc_data", "highlight", "prettify","no_intra_emphasis"]
 theme: minima
 markdown: redcarpet
+highlighter: redcarpet
 
 plugins:
  - jekyll-feed
