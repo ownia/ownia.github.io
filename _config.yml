@@ -2,7 +2,7 @@ title: Ownia
 author: 
 email: o451686892@outlook.com | o451686892@gmail.com
 description: > # this means to ignore newlines until "show_exerpts:"
-show_excerpts: true # set to true to show excerpts on the homepage
+show_excerpts: false # set to true to show excerpts on the homepage
 
 # Minima date format
 # refer to https://shopify.github.io/liquid/filters/date/ if you want to customize this
