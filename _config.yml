@@ -40,11 +40,21 @@ minima:
 # - about.md
 
 # Build settings
-redcarpet:
-    extensions: [ "hard_wrap","autolink", "tables", "strikethrough", "superscript", "with_toc_data", "highlight", "prettify","no_intra_emphasis"]
 theme: minima
-markdown: redcarpet
-highlighter: redcarpet
+markdown: kramdown
+highlighter: rouge
+kramdown:
+  input:                     GFM
+  auto_ids:                  true
+  footnote_nr:               1
+  entity_output:             as_char
+  toc_levels:                1..6
+  smart_quotes:              lsquo,rsquo,ldquo,rdquo
+  enable_coderay:            false
+  hard_wrap:                 false
+  syntax_highlighter:        rouge
+  transliterated_header_ids: true
+  footnote_backlink:         "&#8617;&#xfe0e;"
 
 plugins:
  - jekyll-feed
