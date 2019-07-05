@@ -78,4 +78,7 @@ theme: light
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
-  type:
+  type: git
+  repo: https://github.com/ownia/ownia.github.io.git
+  branch: master
+  message:
