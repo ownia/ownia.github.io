@@ -1,5 +1,7 @@
-.bundle
-.sass-cache
-Gemfile.lock
-_site
-*.gem
+.DS_Store
+Thumbs.db
+db.json
+*.log
+node_modules/
+public/
+.deploy*/
