@@ -48,7 +48,7 @@
     
       <li><a href="/">Home</a></li>
     
-      <li><a href="/">Archives</a></li>
+      <li><a href="/archives">Archives</a></li>
     
   </ul>
   <div class="clearfix"></div>
@@ -76,7 +76,6 @@
 <p>问题：给定一个整数序列，按照是非递减的顺序排列序列中的整数<br>输入：一个整数序列<br>输出：整数序列，其中的整数升序排列</p>
 </blockquote>
 <a id="more"></a>
-
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">bubble_sort</span><span class="params">(<span class="keyword">int</span> *a, <span class="keyword">int</span> size)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i, j, t;</span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">1</span>; i &lt; size; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">    <span class="keyword">for</span>(j = <span class="number">0</span>; j &lt; size -i; ++j)</span><br><span class="line">        &#123;</span><br><span class="line">        <span class="keyword">if</span>(a[j] &gt; a[j+<span class="number">1</span>])</span><br><span class="line">            &#123;</span><br><span class="line">            t = a[j];</span><br><span class="line">            a[j] = a[j+<span class="number">1</span>];</span><br><span class="line">            a[j+<span class="number">1</span>] = t;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p><strong>时间复杂度分析</strong><br>其外层循环执行 N - 1次。<br>内层循环最多的时候执行N次，最少的时候执行1次，平均执行(N+1)/2次。<br>所以循环体内的比较交换约执行(N - 1)(N + 1) / 2 = (N^2 - 1)/2。<br>按照计算复杂度的原则，去掉常数，去掉最高项系数，其复杂度为O(N^2)。</p>
