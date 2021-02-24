@@ -5,3 +5,10 @@ db.json
 node_modules/
 public/
 .deploy*/
+lib/
+coverage/
+docs/.vuepress/.temp/
+docs/.vuepress/.cache/
+docs/.vuepress/dist/
+.temp
+.cache
