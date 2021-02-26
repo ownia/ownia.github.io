@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Ownia</title>
+    <link>http://ownia.top/</link>
+    <description>Recent content on Ownia</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Sat, 29 Jun 2019 00:00:00 +0000</lastBuildDate><atom:link href="http://ownia.top/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>谈谈九号秘事S03.E03中的字谜</title>
+      <link>http://ownia.top/posts/inside_no.9_s03_e03_riddle/</link>
+      <pubDate>Sat, 29 Jun 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://ownia.top/posts/inside_no.9_s03_e03_riddle/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;Inside.No.9.S03.E03.the.riddle.of.the.Sphinx
+斯芬克斯的谜语&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
+      <title>中国导演电影补全计划(2)</title>
+      <link>http://ownia.top/posts/the_road_to_chinese_director_film_2/</link>
+      <pubDate>Fri, 26 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://ownia.top/posts/the_road_to_chinese_director_film_2/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;正是峰前回雁时&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
+      <title>中国导演电影补全计划(1)</title>
+      <link>http://ownia.top/posts/the_road_to_chinese_director_film_1/</link>
+      <pubDate>Tue, 12 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://ownia.top/posts/the_road_to_chinese_director_film_1/</guid>
+      <description>&lt;p&gt;之所以写这篇文章，是因为之前还觉得自己阅片量还可以，但随着对电影这一门艺术的了解越来越深入，愈发觉察自己知之甚少。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>RaspberryPi3B的使用问题</title>
+      <link>http://ownia.top/posts/dealing_with_raspberrypi3b/</link>
+      <pubDate>Thu, 19 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>http://ownia.top/posts/dealing_with_raspberrypi3b/</guid>
+      <description>&lt;p&gt;树莓派官网raspberrypi.org下载Raspbian stretch with desktop，通过Win32DiskImager烧录进16gSD卡中，出现如下错误：&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>扫雷MineSweeper的设计</title>
+      <link>http://ownia.top/posts/minesweeperdesign/</link>
+      <pubDate>Mon, 05 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>http://ownia.top/posts/minesweeperdesign/</guid>
+      <description>&lt;h4 id=&#34;minesweeper的实现思路&#34;&gt;MineSweeper的实现思路&lt;/h4&gt;</description>
+    </item>
+    
+    <item>
+      <title>脚尖</title>
+      <link>http://ownia.top/posts/toes/</link>
+      <pubDate>Mon, 15 Jan 2018 00:00:00 +0000</pubDate>
+      
+      <guid>http://ownia.top/posts/toes/</guid>
+      <description>&lt;p&gt;在脚尖的世界里，他觉得自己一直很孤独。每天大部分时间都被袜子所束缚。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Windows10 17035.1000的绿屏问题解决</title>
+      <link>http://ownia.top/posts/gsod_on_windows10_17035.1000/</link>
+      <pubDate>Fri, 12 Jan 2018 00:00:00 +0000</pubDate>
+      
+      <guid>http://ownia.top/posts/gsod_on_windows10_17035.1000/</guid>
+      <description>&lt;p&gt;XPS13使用Windows10开发者预览版快速通道更新17035.1000之后，打开电脑一段时间后会出现BAD_POOL_CALLER绿屏，只能通过重启解决。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>中国文学简史与选读之唐宋词史</title>
+      <link>http://ownia.top/posts/the_poem_of_tang_dynasty_and_the_verse_of_song_dynasty/</link>
+      <pubDate>Fri, 09 Dec 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://ownia.top/posts/the_poem_of_tang_dynasty_and_the_verse_of_song_dynasty/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;雨霖铃 · 心请人访&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;心请人访。免遭狐假①，涉我烟瘴。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>冒泡排序及其复杂度分析</title>
+      <link>http://ownia.top/posts/bubble_sort_complexity_analysis/</link>
+      <pubDate>Thu, 27 Oct 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://ownia.top/posts/bubble_sort_complexity_analysis/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;问题：给定一个整数序列，按照是非递减的顺序排列序列中的整数
+输入：一个整数序列
+输出：整数序列，其中的整数升序排列&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
+      <title>三目运算符的妙用</title>
+      <link>http://ownia.top/posts/the_magic_use_of_ternary_operator/</link>
+      <pubDate>Tue, 04 Oct 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://ownia.top/posts/the_magic_use_of_ternary_operator/</guid>
+      <description>&lt;p&gt;慕课网（imooc）上一题：&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>一千零一个你</title>
+      <link>http://ownia.top/posts/the_most_special_you/</link>
+      <pubDate>Mon, 03 Oct 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://ownia.top/posts/the_most_special_you/</guid>
+      <description>&lt;p&gt;读了一首诗，想起来了你。附和了一首。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>爱和喜欢</title>
+      <link>http://ownia.top/posts/love_and_like/</link>
+      <pubDate>Sun, 02 Oct 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://ownia.top/posts/love_and_like/</guid>
+      <description>&lt;p&gt;少用爱这一个字眼，多用用“喜欢”。
+你真的爱她吗？&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>你踮起脚尖</title>
+      <link>http://ownia.top/posts/you_tips_toes/</link>
+      <pubDate>Sat, 01 Oct 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://ownia.top/posts/you_tips_toes/</guid>
+      <description>&lt;p&gt;我站在车水马龙之间，除了你的背影，一无所有。
+你左右脚轮番轻轻踮起脚尖，向着前方迈去。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Archive</title>
+      <link>http://ownia.top/archives/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://ownia.top/archives/</guid>
+      <description>archives</description>
+    </item>
+    
+    <item>
+      <title>Search</title>
+      <link>http://ownia.top/search/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://ownia.top/search/</guid>
+      <description>search</description>
+    </item>
+    
+  </channel>
+</rss>
