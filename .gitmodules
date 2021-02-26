@@ -1,0 +1,12 @@
+[submodule "themes/doks"]
+	path = themes/doks
+	url = https://github.com/h-enk/doks.git
+[submodule "themes/paper"]
+	path = themes/paper
+	url = https://github.com/nanxiaobei/hugo-paper
+[submodule "themes/PaperMod"]
+	path = themes/PaperMod
+	url = https://github.com/adityatelange/hugo-PaperMod.git
+[submodule "themes/themes/paper"]
+	path = themes/themes/paper
+	url = https://github.com/nanxiaobei/hugo-paper

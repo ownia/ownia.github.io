@@ -7,8 +7,5 @@ public/
 .deploy*/
 lib/
 coverage/
-docs/.vuepress/.temp/
-docs/.vuepress/.cache/
-docs/.vuepress/dist/
 .temp
 .cache
