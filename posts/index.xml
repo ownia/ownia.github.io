@@ -85,28 +85,6 @@
     </item>
     
     <item>
-      <title>冒泡排序及其复杂度分析</title>
-      <link>http://ownia.top/posts/bubble_sort_complexity_analysis/</link>
-      <pubDate>Thu, 27 Oct 2016 00:00:00 +0000</pubDate>
-      
-      <guid>http://ownia.top/posts/bubble_sort_complexity_analysis/</guid>
-      <description>&lt;blockquote&gt;
-&lt;p&gt;问题：给定一个整数序列，按照是非递减的顺序排列序列中的整数
-输入：一个整数序列
-输出：整数序列，其中的整数升序排列&lt;/p&gt;
-&lt;/blockquote&gt;</description>
-    </item>
-    
-    <item>
-      <title>三目运算符的妙用</title>
-      <link>http://ownia.top/posts/the_magic_use_of_ternary_operator/</link>
-      <pubDate>Tue, 04 Oct 2016 00:00:00 +0000</pubDate>
-      
-      <guid>http://ownia.top/posts/the_magic_use_of_ternary_operator/</guid>
-      <description>&lt;p&gt;慕课网（imooc）上一题：&lt;/p&gt;</description>
-    </item>
-    
-    <item>
       <title>一千零一个你</title>
       <link>http://ownia.top/posts/the_most_special_you/</link>
       <pubDate>Mon, 03 Oct 2016 00:00:00 +0000</pubDate>
