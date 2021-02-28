@@ -1,14 +1,10 @@
 ---
 title: 谈谈九号秘事S03.E03中的字谜
 date: 2019-06-29
-tags:
-comments: true
 ---
 
 >Inside.No.9.S03.E03.the.riddle.of.the.Sphinx
 >斯芬克斯的谜语
-
-<!--more-->
 
 开胃菜：
 
@@ -30,7 +26,7 @@ comments: true
 
 来看看正宗的crossword吧。
 
-{% asset_img empty-crossword.png %}
+![](/imgs/empty-crossword.png)
 
 crossword分为横行across和纵行down。每个开头都有标号，通过给出的提示，来填满所有空格。
 
@@ -92,8 +88,7 @@ Origins提示要使用a species popularised savage里的每个单词第一个字
 
 剧里到最后也没有能够填完crossword，还留下很多空格。不过重看整体，能发现也是隐藏了不少东西的。
 
-{% asset_img full-crossword.png %}
-
+![](/imgs/full-crossword.png)
 **I swapped cups**
 
 **RIP NHS**

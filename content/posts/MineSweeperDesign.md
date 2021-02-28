@@ -1,13 +1,9 @@
 ---
 title: 扫雷MineSweeper的设计
 date: 2018-03-05
-tags:
-comments: true
 ---
 
 #### MineSweeper的实现思路
-
-<!--more-->
 
 * 使用二维的vector容器数组存储gameMap
 * 使用结构体MineBlock存储gameMap信息
