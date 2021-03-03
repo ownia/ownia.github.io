@@ -649,6 +649,7 @@ body {
   #header #title h1 {
     display: table-cell;
     vertical-align: middle;
+    color: #2bbc8a;
   }
   #header #nav ul a:hover {
     background: none;
