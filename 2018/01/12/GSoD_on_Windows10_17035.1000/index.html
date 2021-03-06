@@ -6,15 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="XPS13使用Windows10开发者预览版快速通道更新17035.1000之后，打开电脑一段时间后会出现BAD_POOL_CALLER绿屏，只能通过重启解决。在设置-&gt;开发者预览里把快速通道调至慢速通道后，再次绿屏，错误代码为SYSTEM_THREAD_EXCEPTION_NOT_HANDLED，此时不能进入系统主界面。在安全模式中删除Realtek的驱动，还是无效。备份系统所有数据到移动">
+    <meta name="description" content="XPS13使用Windows10开发者预览版快速通道更新17035.1000之后，打开电脑一段时间后会出现BAD_POOL_CALLER绿屏，只能通过重启解决。 在设置-&gt;开发者预览里把快速通道调至慢速通道后，再次绿屏，错误代码为SYSTEM_THREAD_EXCEPTION_NOT_HANDLED，此时不能进入系统主界面。在安全模式中删除Realtek的驱动，还是无效。备份系统所有数据到移">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Windows10 17035.1000的绿屏问题解决">
 <meta property="og:url" content="http://ownia.top/2018/01/12/GSoD_on_Windows10_17035.1000/index.html">
 <meta property="og:site_name" content="Ownia">
-<meta property="og:description" content="XPS13使用Windows10开发者预览版快速通道更新17035.1000之后，打开电脑一段时间后会出现BAD_POOL_CALLER绿屏，只能通过重启解决。在设置-&gt;开发者预览里把快速通道调至慢速通道后，再次绿屏，错误代码为SYSTEM_THREAD_EXCEPTION_NOT_HANDLED，此时不能进入系统主界面。在安全模式中删除Realtek的驱动，还是无效。备份系统所有数据到移动">
+<meta property="og:description" content="XPS13使用Windows10开发者预览版快速通道更新17035.1000之后，打开电脑一段时间后会出现BAD_POOL_CALLER绿屏，只能通过重启解决。 在设置-&gt;开发者预览里把快速通道调至慢速通道后，再次绿屏，错误代码为SYSTEM_THREAD_EXCEPTION_NOT_HANDLED，此时不能进入系统主界面。在安全模式中删除Realtek的驱动，还是无效。备份系统所有数据到移">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2018-01-12T00:00:00.000Z">
-<meta property="article:modified_time" content="2021-03-05T05:45:51.572Z">
+<meta property="article:modified_time" content="2021-03-06T16:32:13.411Z">
 <meta property="article:author" content="Ownia">
 <meta name="twitter:card" content="summary">
     
@@ -73,7 +73,10 @@
     </div>
   </header>
   <div class="content" itemprop="articleBody">
-    <p>XPS13使用Windows10开发者预览版快速通道更新17035.1000之后，打开电脑一段时间后会出现BAD_POOL_CALLER绿屏，只能通过重启解决。<br>在设置-&gt;开发者预览里把快速通道调至慢速通道后，再次绿屏，错误代码为<code>SYSTEM_THREAD_EXCEPTION_NOT_HANDLED</code>，此时不能进入系统主界面。在安全模式中删除Realtek的驱动，还是无效。备份系统所有数据到移动硬盘。尝试不删除数据重置电脑，出现“计算机意外地重新启动或遇到错误，windows安装无法继续”。回滚系统。尝试删除个人数据重置电脑，再次出现“计算机意外地重新启动或遇到错误，windows安装无法继续”，此时无法回滚。尝试运行oobe里的msoobe.exe，还是无效。<br>最终只有用u盘重装系统一条路。最后使用一个16g的HP u盘进行了恢复盘安装。通过dell微信客服问来<a target="_blank" rel="noopener" href="https://www.microsoft.com/zh-cn/software-download/windows10?linkId=44645463">https://www.microsoft.com/zh-cn/software-download/windows10?linkId=44645463</a> 网址获取镜像。安装u盘时，因为是通过uefi格式安装，所以不修改bios设置会出现问题，修改uefi secure boot和legacy boot都为off，重新进入F12，开始重装系统。过程基本顺利，删除所有分区之后新建分区。从1507更新到1709系统。驱动根据服务标签在<a target="_blank" rel="noopener" href="http://www.dell.com/support/home/cn/zh/cndhs1?app=drivers&amp;~ck=mn%E4%B8%8A%E6%9F%A5%E6%89%BE%EF%BC%8C%E6%88%96%E8%80%85%E7%9B%B4%E6%8E%A5%E4%B8%8B%E8%BD%BD%E6%9C%80%E6%96%B0%E7%9A%84Dell">http://www.dell.com/support/home/cn/zh/cndhs1?app=drivers&amp;~ck=mn上查找，或者直接下载最新的Dell</a> update应用程序自动查找所需驱动。<br>退出win10开发者预览通道，慢速和快速都退出，恢复稳定版本。</p>
+    <p>XPS13使用Windows10开发者预览版快速通道更新17035.1000之后，打开电脑一段时间后会出现BAD_POOL_CALLER绿屏，只能通过重启解决。</p>
+<p>在设置-&gt;开发者预览里把快速通道调至慢速通道后，再次绿屏，错误代码为<code>SYSTEM_THREAD_EXCEPTION_NOT_HANDLED</code>，此时不能进入系统主界面。在安全模式中删除Realtek的驱动，还是无效。备份系统所有数据到移动硬盘。尝试不删除数据重置电脑，出现“计算机意外地重新启动或遇到错误，windows安装无法继续”。回滚系统。尝试删除个人数据重置电脑，再次出现“计算机意外地重新启动或遇到错误，windows安装无法继续”，此时无法回滚。尝试运行oobe里的msoobe.exe，还是无效。</p>
+<p>最终只有用u盘重装系统一条路。最后使用一个16g的HP u盘进行了恢复盘安装。通过dell微信客服问来<a target="_blank" rel="noopener" href="https://www.microsoft.com/zh-cn/software-download/windows10?linkId=44645463">https://www.microsoft.com/zh-cn/software-download/windows10?linkId=44645463</a> 网址获取镜像。安装u盘时，因为是通过uefi格式安装，所以不修改bios设置会出现问题，修改uefi secure boot和legacy boot都为off，重新进入F12，开始重装系统。过程基本顺利，删除所有分区之后新建分区。从1507更新到1709系统。驱动根据服务标签在<a target="_blank" rel="noopener" href="http://www.dell.com/support/home/cn/zh/cndhs1?app=drivers&amp;~ck=mn%E4%B8%8A%E6%9F%A5%E6%89%BE%EF%BC%8C%E6%88%96%E8%80%85%E7%9B%B4%E6%8E%A5%E4%B8%8B%E8%BD%BD%E6%9C%80%E6%96%B0%E7%9A%84Dell">http://www.dell.com/support/home/cn/zh/cndhs1?app=drivers&amp;~ck=mn上查找，或者直接下载最新的Dell</a> update应用程序自动查找所需驱动。</p>
+<p>退出win10开发者预览通道，慢速和快速都退出，恢复稳定版本。</p>
 
   </div>
 </article>

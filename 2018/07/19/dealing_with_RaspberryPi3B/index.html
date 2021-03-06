@@ -6,16 +6,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="树莓派官网raspberrypi.org下载Raspbian stretch with desktop，通过Win32DiskImager烧录进16gSD卡中，出现如下错误：在官网上找到类似问题，https:&#x2F;&#x2F;raspberrypi.stackexchange.com&#x2F;questions&#x2F;17023&#x2F;panic-vfs-unable-to-mount-root-fs-on-unknown-blo">
+    <meta name="description" content="树莓派官网raspberrypi.org下载Raspbian stretch with desktop，通过Win32DiskImager烧录进16gSD卡中，出现如下错误：  在官网上找到类似问题，https:&#x2F;&#x2F;raspberrypi.stackexchange.com&#x2F;questions&#x2F;17023&#x2F;panic-vfs-unable-to-mount-root-fs-on-unknown-b">
 <meta property="og:type" content="article">
 <meta property="og:title" content="RaspberryPi3B的使用问题">
 <meta property="og:url" content="http://ownia.top/2018/07/19/dealing_with_RaspberryPi3B/index.html">
 <meta property="og:site_name" content="Ownia">
-<meta property="og:description" content="树莓派官网raspberrypi.org下载Raspbian stretch with desktop，通过Win32DiskImager烧录进16gSD卡中，出现如下错误：在官网上找到类似问题，https:&#x2F;&#x2F;raspberrypi.stackexchange.com&#x2F;questions&#x2F;17023&#x2F;panic-vfs-unable-to-mount-root-fs-on-unknown-blo">
+<meta property="og:description" content="树莓派官网raspberrypi.org下载Raspbian stretch with desktop，通过Win32DiskImager烧录进16gSD卡中，出现如下错误：  在官网上找到类似问题，https:&#x2F;&#x2F;raspberrypi.stackexchange.com&#x2F;questions&#x2F;17023&#x2F;panic-vfs-unable-to-mount-root-fs-on-unknown-b">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://ownia.top/images/raspberry.jpg">
 <meta property="article:published_time" content="2018-07-19T00:00:00.000Z">
-<meta property="article:modified_time" content="2021-03-05T05:45:51.777Z">
+<meta property="article:modified_time" content="2021-03-06T16:32:13.412Z">
 <meta property="article:author" content="Ownia">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://ownia.top/images/raspberry.jpg">
@@ -75,7 +75,13 @@
     </div>
   </header>
   <div class="content" itemprop="articleBody">
-    <p>树莓派官网raspberrypi.org下载Raspbian stretch with desktop，通过Win32DiskImager烧录进16gSD卡中，出现如下错误：<br><img src="/images/raspberry.jpg"><br>在官网上找到类似问题，<a target="_blank" rel="noopener" href="https://raspberrypi.stackexchange.com/questions/17023/panic-vfs-unable-to-mount-root-fs-on-unknown-block179-2%EF%BC%8C">https://raspberrypi.stackexchange.com/questions/17023/panic-vfs-unable-to-mount-root-fs-on-unknown-block179-2，</a> 但是没有得到解决。<br>通过百度得知可以使用<code>sudo fsck -f -v -r /dev/sdb2</code>之类的fsck命令解决。在deepin上使用此命令后错误没有得到解决。<br>尝试使用官网的noobs进行安装。<br>使用DiskGenius对已经烧录过的SD卡进行重新分区并格式化，烧录noobs系统。<br>安装时一直循环resizing fat partition。<br>解决方法：在使用DiskGenius之后，再使用电脑自带的格式化再次格式化，文件系统为FAT32，分配单元大小为16kb。最终成功安装。<br>使用noobs安装则不能开启expand Filesystem。<br>安装之后开启修改国内源，如果没有文件权限则使用chmod命令修改权限，在Raspberry Pi Configuration中开启SSH和VNC。<br>sudo ifconfig可以查看ip地址。</p>
+    <p>树莓派官网raspberrypi.org下载Raspbian stretch with desktop，通过Win32DiskImager烧录进16gSD卡中，出现如下错误：</p>
+<p><img src="/images/raspberry.jpg"></p>
+<p>在官网上找到类似问题，<a target="_blank" rel="noopener" href="https://raspberrypi.stackexchange.com/questions/17023/panic-vfs-unable-to-mount-root-fs-on-unknown-block179-2%EF%BC%8C">https://raspberrypi.stackexchange.com/questions/17023/panic-vfs-unable-to-mount-root-fs-on-unknown-block179-2，</a> 但是没有得到解决。</p>
+<p>通过百度得知可以使用<code>sudo fsck -f -v -r /dev/sdb2</code>之类的fsck命令解决。在deepin上使用此命令后错误没有得到解决。</p>
+<p>尝试使用官网的noobs进行安装。使用DiskGenius对已经烧录过的SD卡进行重新分区并格式化，烧录noobs系统。安装时一直循环resizing fat partition。</p>
+<p>解决方法：在使用DiskGenius之后，再使用电脑自带的格式化再次格式化，文件系统为FAT32，分配单元大小为16kb。最终成功安装。</p>
+<p>使用noobs安装则不能开启expand Filesystem。安装之后开启修改国内源，如果没有文件权限则使用chmod命令修改权限，在Raspberry Pi Configuration中开启SSH和VNC。sudo ifconfig可以查看ip地址。</p>
 
   </div>
 </article>
