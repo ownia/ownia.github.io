@@ -26,7 +26,7 @@ date: 2019-06-29
 
 来看看正宗的crossword吧。
 
-![](/images/empty-crossword.png)
+![](/images/Inside_No.9_S03_E03_riddle/empty-crossword.png)
 
 crossword分为横行across和纵行down。每个开头都有标号，通过给出的提示，来填满所有空格。
 
@@ -88,7 +88,7 @@ Origins提示要使用a species popularised savage里的每个单词第一个字
 
 剧里到最后也没有能够填完crossword，还留下很多空格。不过重看整体，能发现也是隐藏了不少东西的。
 
-![](/images/full-crossword.png)
+![](/images/Inside_No.9_S03_E03_riddle/full-crossword.png)
 **I swapped cups**
 
 **RIP NHS**

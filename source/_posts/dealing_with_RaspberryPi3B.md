@@ -5,7 +5,7 @@ date: 2018-07-19
 
 树莓派官网raspberrypi.org下载Raspbian stretch with desktop，通过Win32DiskImager烧录进16gSD卡中，出现如下错误：
 
-![](/images/raspberry.jpg)
+![](/images/dealing_with_RaspberryPi3B/raspberry.jpg)
 
 在官网上找到类似问题，https://raspberrypi.stackexchange.com/questions/17023/panic-vfs-unable-to-mount-root-fs-on-unknown-block179-2， 但是没有得到解决。
 
