@@ -3,16 +3,17 @@ title: Using ATrace(Android system and app trace events)
 date: 2020-11-12
 ---
 
-## atrace是什么
+## ATrace是什么
 
-atarce(Android system and app trace events)是Android系统和软件的事件追踪器，支持用户空间的系统事件和软件事件，以及内核空间的函数追踪。它支持设置属性来进行用户空间追踪，也可以写入ftrace的sysfs节点进行事件追踪，还能利用function tracer进行内核中大部分函数进行追踪。
+ATarce(Android system and app trace events)是Android系统和软件的事件追踪器，支持用户空间的系统事件和软件事件，以及内核空间的函数追踪。它支持设置属性来进行用户空间追踪，也可以写入ftrace的sysfs节点进行事件追踪，还能利用function tracer进行内核中大部分函数进行追踪。
+
 它一方面通过NDK层设置接口给JNI提供API，另一方面又通过zygote在Android内部进程中对属性及时响应，还在通过设置ftrace下的节点属性控制信息输出。
 
-## atrace流程图
+## ATrace流程图
 
 ![atrace_2](/images/using_atrace/atrace_2.jpg)
 
-## atrace信息捕获
+## ATrace信息捕获
 
 根据atrace.cpp源码可以看出，对于追踪类型的分类依据来源于k_categories结构中定义好的值。k_categories是一个TracingCategory结构体，定义如下：
 ```
@@ -73,8 +74,11 @@ appname方式会在进程内部读取/proc/self/cmdline的第一行，然后和�
 #### 3. trace event方式
 
 trace event方式是对debugfs中events下的节点使能来进行追踪控制的。通常来说，trace event使用宏TRACE_EVENT()来新增追踪事件。当对应节点被使能后，函数插桩被激活，桩点中的函数被调用时就会被记录下来，将数据通过设置好的filter和trigger存储到ring buffer中，最后通过设置好的format进行格式化输出。
+
 对于format中每个块来说，filed格式为`field:field-type field-name; offset:N; size:N;`，如果一个field-name以`common_`开头的话，说明这个field是公共定义的，在相同的event下都享受这个filed。
-对于event的filter来说，可以通过多种方式就行过滤。比如可以通过表达式语法来指定某些条件下field-name的匹配；也可以直接控制某个event下的所有子系统，此时会根据具体的filter下是否有修改的field来进行修改；还可以利用PID的方式直接对`set_event_pid`节点进行设置，
+
+对于event的filter来说，可以通过多种方式就行过滤。比如可以通过表达式语法来指定某些条件下field-name的匹配；也可以直接控制某个event下的所有子系统，此时会根据具体的filter下是否有修改的field来进行修改；还可以利用PID的方式直接对`set_event_pid`节点进行设置。
+
 trigger则是用来对event的控制命令进行过滤。它可以控制这个另一个event的开启与关闭当这个event的trigger被激活时，也可以转储堆栈追踪、记录捕获的函数到snapshot中，也能直接控制追踪的开启与关闭。值得注意的是，这些trigger commands都能通过表达式语法来进行更细致的控制，能够直接对每个event定义的`TP_STRUCT__entry`中的成员来用于条件判断。
 
 #### 4. 内核函数追踪方式
