@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="方案一设计(Design Proposal v1)Andorid系统在杀死进程并回收内存时，并不是即时操作，同时还要保证可用内存保留在一个范围内防止在回收进程内存时系统性能下降。假如进程退出前在不间断的睡眠中阻塞或者由于其他一些操作耗时较长，此时的内存回收时间可能会不可估计。 通过提高内存回收的速率可以解决上述问题。提出一个方案，修改kill_pid_info的流程，在对pending的状态发送S">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SIGKILL Memory Reclaim Expedite">
+<meta property="og:url" content="http://ownia.top/2021/01/26/sigkill_memory_reclaim_expedite/index.html">
+<meta property="og:site_name" content="Ownia">
+<meta property="og:description" content="方案一设计(Design Proposal v1)Andorid系统在杀死进程并回收内存时，并不是即时操作，同时还要保证可用内存保留在一个范围内防止在回收进程内存时系统性能下降。假如进程退出前在不间断的睡眠中阻塞或者由于其他一些操作耗时较长，此时的内存回收时间可能会不可估计。 通过提高内存回收的速率可以解决上述问题。提出一个方案，修改kill_pid_info的流程，在对pending的状态发送S">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://ownia.top/images/sigkill_memory_reclaim_expedite/top.jpg">
+<meta property="og:image" content="http://ownia.top/images/sigkill_memory_reclaim_expedite/trace.jpg">
+<meta property="og:image" content="http://ownia.top/images/sigkill_memory_reclaim_expedite/top2.jpg">
+<meta property="og:image" content="http://ownia.top/images/sigkill_memory_reclaim_expedite/reap_mm.jpg">
+<meta property="article:published_time" content="2021-01-26T00:00:00.000Z">
+<meta property="article:modified_time" content="2021-03-15T14:37:39.744Z">
+<meta property="article:author" content="Ownia">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://ownia.top/images/sigkill_memory_reclaim_expedite/top.jpg">
+    
+    
+    <!-- title -->
+    <title>SIGKILL Memory Reclaim Expedite</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        SIGKILL Memory Reclaim Expedite
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Ownia</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2021-01-26T00:00:00.000Z" itemprop="datePublished">2021-01-26</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  <div class="content" itemprop="articleBody">
+    <h2 id="方案一设计-Design-Proposal-v1"><a href="#方案一设计-Design-Proposal-v1" class="headerlink" title="方案一设计(Design Proposal v1)"></a>方案一设计(Design Proposal v1)</h2><p>Andorid系统在杀死进程并回收内存时，并不是即时操作，同时还要保证可用内存保留在一个范围内防止在回收进程内存时系统性能下降。假如进程退出前在不间断的睡眠中阻塞或者由于其他一些操作耗时较长，此时的内存回收时间可能会不可估计。</p>
+<p>通过提高内存回收的速率可以解决上述问题。提出一个方案，修改kill_pid_info的流程，在对pending的状态发送SIGKILL信号后，立即将task_struct标记为受害者，同时将该task_struct挂到内核线程oom_reaper的链表上，之后oom_reaper会接管该进程的vma，隔离内存执行内存回收。使用oom_reaper线程处理victim进程时，即使它无法运行也能执行回收操作。</p>
+<p><img src="/images/sigkill_memory_reclaim_expedite/top.jpg"></p>
+<p>结果调查，Android lowmemorykiller由于内核版本的不同，通常会选择不同的策略来实施lowmemorykiller。无论哪种措施，都要对系统中的进程进行一系列的优先级判断，然后根据设定好的处理逻辑执行kill操作。</p>
+<p>通过init进程lmkd执行杀死进程时，通过系统调用kill对指定要杀的进程pid发送信号，通过驱动lowmemorykiller执行杀死进程时，通过内核函数send_sig传输task_struct和SIGKILL信号。可以看出，无论系统采用哪种方式执行LMK，都会将SIGKILL和对应的进程信息发送给内核的信号模块。</p>
+<p>9652机芯采用的内核版本为4.9，其Android lowmemorykiller的方案为通过lowmemorykiller驱动处理进程。原始的send_sig接口需要传入task_struct，同时比系统调用kill更快的进入signal模块，而oom_reaper需要访问mm_struct的mmap_sem，而在signal模块中对mm_struct进行处理可能会导致信号阻塞，引起其他的风险。</p>
+<p>因此本方案修改了lowmemorykiller驱动中SIGKILL信号的发送方式，使用内核函数kill_pid替代。这样就能够在信号发送之后再对进程的task_struct进行处理，降低了持锁的风险。但是如果受害者进程正在进行coredump时，可能会导致coredump的数据缺失。</p>
+<p><img src="/images/sigkill_memory_reclaim_expedite/trace.jpg"></p>
+<p>由于lowmemorykiller触发具有不确定性，需要判断bad进程来进行kill，所以对于新方案的性能测试需要从两方面入手。一方面是在lowmemorykiller触发的场景下查看匿名页和文件页在开启和关闭优化下的变动情况，以及lowmemorykiller触发时的回收内存的大小和kswapd进程的资源占用。另一方面是测量kill进程时发送信号到进程退出经过的时间，通过执行多次kill操作采集样本分析数据。</p>
+<p>所需开启的trace event为:sched:sched_process_exit、sched:sched_switch、signal:signal_generate、kmem:rss_stat。其中kmem:rss_stat用来查看对应pid对内存的操作，查看mm_struct中4类内存的变化信息。signal:signal_generate用来捕获信号9，确定__signal_send 调用的时机。sched:sched_process_exit和sched:sched_switch分别对进程退出do_exit和do_task_dead时候的时间点进行捕获。</p>
+<p>匿名页与文件页使用情况变化:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>优化功能关闭</th>
+<th>优化功能开启</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Active(anon) + Active(file) 增加的值</td>
+<td>11933372B</td>
+<td>11307024B</td>
+</tr>
+<tr>
+<td>Active(anon) + Active(file) 减少的值</td>
+<td>11400280B</td>
+<td>10529300B</td>
+</tr>
+<tr>
+<td>Inactive(anon) + Inactive(file) 增加的值</td>
+<td>40040B</td>
+<td>711944B</td>
+</tr>
+<tr>
+<td>Inactive(anon) + Inactive(file) 减少的值</td>
+<td>136656B</td>
+<td>742036B</td>
+</tr>
+</tbody></table>
+<p>优化功能对进程消亡时间的影响:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>优化功能关闭</th>
+<th>优化功能开启</th>
+<th>提升倍数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>signal_generate到sched_process_exit平均时间差</td>
+<td>0.01505937s</td>
+<td>0.00110683s</td>
+<td>13.61</td>
+</tr>
+<tr>
+<td>signal_generate到sched_switch平均时间差</td>
+<td>0.02152393s</td>
+<td>0.00781319s</td>
+<td>2.75</td>
+</tr>
+</tbody></table>
+<p>根据测试结果，当优化功能开启后，对于Inactive的内存空间的处理吞吐量大大增大。另外，以__send_signal到__schedule(prev_state=x)为采集时间段比较开关优化功能时的耗时，可看出在未开启优化耗时是开启优化耗时的2.75倍。</p>
+<h2 id="方案二设计-Design-Proposal-v2"><a href="#方案二设计-Design-Proposal-v2" class="headerlink" title="方案二设计(Design Proposal v2)"></a>方案二设计(Design Proposal v2)</h2><p>在oom_reaper线程中，有一个值MAX_OOM_REAP_RETRIES，用来控制oom_reaper的重试次数，其中oom_reaper只使用一个try_lock，并会在短暂的睡眠时间尝试10(MAX_OOM_REAP_RETRIES)次。但假如mm_struct中的读写信号量mmap_sem被阻止时，由于采取的策略为try_lock，可能会出现锁竞争的情况，降低内存回收的效率。另外如果产生mmap_sem的争用也会导致lowmemorykiller延迟的进一步扩大。</p>
+<p>该方案不再通过oom_reaper线程执行内存回收，而是在发送SIGKILL信号的进程的上下文中进行内存回收。</p>
+<p><img src="/images/sigkill_memory_reclaim_expedite/top2.jpg"></p>
+<p>通过对系统节点/sys/kernel/lmk_sigkill/lmk_sigkill_on进行写入(0、1、2)可对优化功能进行开启与关闭，方案二兼容方案一的优化。</p>
+<p>优化功能对应标志:</p>
+<table>
+<thead>
+<tr>
+<th>序号</th>
+<th>优化功能</th>
+<th>tcl_lmk_sigkill.h</th>
+<th>oom.h(enum sigkill_state)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>关闭</td>
+<td>LMK_SIGKILL_CTRL_OFF</td>
+<td>SIGKILL_STATE_OFF</td>
+</tr>
+<tr>
+<td>1</td>
+<td>方案一(expedite_reclaim)</td>
+<td>LMK_SIGKILL_CTRL_EXPEDITE_ON</td>
+<td>SIGKILL_STATE_EXPEDITE</td>
+</tr>
+<tr>
+<td>2</td>
+<td>方案二(reap_mm)</td>
+<td>LMK_SIGKILL_CTRL_REAP_ON</td>
+<td>SIGKILL_STATE_REAP</td>
+</tr>
+</tbody></table>
+<p><img src="/images/sigkill_memory_reclaim_expedite/reap_mm.jpg"></p>
+<p>优化功能对进程消亡时间的影响:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>优化功能关闭</th>
+<th>优化功能开启</th>
+<th>提升倍数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>signal_generate到sched_process_exit平均时间差</td>
+<td>0.01505937s</td>
+<td>0.00360875s</td>
+<td>4.17</td>
+</tr>
+<tr>
+<td>signal_generate到sched_switch平均时间差</td>
+<td>0.02152393s</td>
+<td>0.02127370s</td>
+<td>1.01</td>
+</tr>
+</tbody></table>
+<p>优化方案二与未开启优化方案时相比较具有明显的提升，但是相比较与优化方案一的测试结果，优化方案二的测试结果没有优化方案一的提升倍数大，但是避免了之前内核线程oom_reaper处理任务超时的影响，不在内核线程中进行匿名内存和swap内存的回收，而是在对victim进程发出SIGKILL信号的进程的上下文中进行匿名内存、非VM_SHARED内存和swap内存(check_swap_entry)的回收。</p>
+
+  </div>
+</article>
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B9%E6%A1%88%E4%B8%80%E8%AE%BE%E8%AE%A1-Design-Proposal-v1"><span class="toc-number">1.</span> <span class="toc-text">方案一设计(Design Proposal v1)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B9%E6%A1%88%E4%BA%8C%E8%AE%BE%E8%AE%A1-Design-Proposal-v2"><span class="toc-number">2.</span> <span class="toc-text">方案二设计(Design Proposal v2)</span></a></li></ol>
+    </div>
+
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2021
+    Ownia
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>
